@@ -1,4 +1,5 @@
 import ImagenCripto from "./assets/img/criptos-Traxer-Unsplash.jpg";
+import Formulario from "./components/Formulario";
 
 function App() {
   return (
@@ -10,10 +11,12 @@ function App() {
           alt=""
         />
       </div>
-      <div className="md:w-1/2">
-        <h1 className="text-4xl font-bold uppercase text-center underline underline-offset-8 decoration-8 decoration-red-400">
-          Cotiza tu criptomoneda
+      <div className="mt-10 mx-8 md:w-1/2">
+        <h1 className="text-2xl sm:text-4xl mb-10 font-bold uppercase text-center">
+          Cotiza tú <span className="font-mono lowercase rounded-lg text-indigo-700 bg-white px-1">criptomoneda</span>
         </h1>
+        
+        <Formulario />
       </div>
     </div>
   );
