@@ -1,9 +1,27 @@
 import { useEffect, useState } from "react";
 import ImagenCripto from "./assets/img/criptos-Traxer-Unsplash.jpg";
 import Formulario from "./components/Formulario";
+import Resultado from "./components/Resultado";
 
 function App() {
   const [error, setError] = useState(false);
+  const [monedas, setMonedas] = useState({});
+  const [resultado, setResultado] = useState({});
+
+  useEffect(() => {
+    if (Object.keys(monedas).length > 0) {
+      const { moneda, criptomoneda } = monedas;
+      const cotizarCripto = async () => {
+        const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
+        const respuesta = await fetch(url);
+        const resultado = await respuesta.json();
+
+        setResultado(resultado.DISPLAY[criptomoneda][moneda]);
+      };
+
+      cotizarCripto();
+    }
+  }, [monedas]);
 
   useEffect(() => {
     if (error) {
@@ -28,7 +46,24 @@ function App() {
           </span>
         </h1>
 
-        <Formulario error={error} setError={setError} />
+        <Formulario setMonedas={setMonedas} error={error} setError={setError} />
+        {resultado.PRICE && (
+          <>
+            <div
+              className={
+                Object.keys(resultado).length > 0
+                  ? `block fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full`
+                  : `hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full`
+              }
+            >
+              <Resultado
+                resultado={resultado}
+                setResultado={setResultado}
+                monedas={monedas}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

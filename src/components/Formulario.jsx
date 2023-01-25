@@ -3,7 +3,7 @@ import { monedas } from "../data/monedas";
 import useSelectMonedas from "../hooks/useSelectMonedas";
 import Modal from "./Modal";
 
-const Formulario = ({ error, setError }) => {
+const Formulario = ({ setMonedas, error, setError }) => {
   const [criptos, setCriptos] = useState([]);
 
   const [moneda, SelectMonedas] = useSelectMonedas("Elige tu moneda", monedas);
@@ -41,6 +41,10 @@ const Formulario = ({ error, setError }) => {
     }
 
     setError(false);
+    setMonedas({
+      moneda,
+      criptomoneda,
+    });
   };
 
   return (
@@ -58,7 +62,7 @@ const Formulario = ({ error, setError }) => {
             className={
               error
                 ? `block fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full`
-                : `fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full`
+                : `hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full`
             }
           >
             <Modal setError={setError} />
